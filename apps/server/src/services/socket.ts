@@ -4,16 +4,16 @@ import Redis from "ioredis";
 //so we need two thing from our redis one is to public the message and second is for suscribing
 //so there thing are taken from our redis server which we made in avien
 const pub = new Redis({
-  host: "caching-a72fef-prateekgurung21-fdb3.g.aivencloud.com",
-  port: 12726,
-  username: "default",
-  password: process.env.password,
+  host: process.env.REDIS_HOST,
+  port: Number(process.env.REDIS_PORT),
+  username: process.env.REDIS_USERNAME,
+  password: process.env.REDIS_PASSWORD,
 });
 const sub = new Redis({
-  host: "caching-a72fef-prateekgurung21-fdb3.g.aivencloud.com",
-  port: 12726,
-  username: "default",
-  password: process.env.password,
+  host: process.env.REDIS_HOST,
+  port: Number(process.env.REDIS_PORT),
+  username: process.env.REDIS_USERNAME,
+  password: process.env.REDIS_PASSWORD,
 });
 
 class SocketService {
