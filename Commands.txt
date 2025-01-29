@@ -1,0 +1,41 @@
+1.So if we want to install like typescript in the server folder which is inside apps/server, so we do is we can check in the root package.json there we will see 
+"workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+ it means all folder inside apps and all folder in packages
+ As we are using yarn  so to add typescript in server folder we can do is
+ yarn workspace server add typescript -D  
+ and
+ yarn workspace server add tsc-watch -D
+ and add tsc.config
+ yarn tsc --init
+ So it will add typescript in our server's package.json as a devDependencie
+
+2. Using socket.io in this so we need to install it in the server folder
+So we are making a modern technique, we are make a folder called services inside server/src so this file will have all the socket logic 
+
+3. Now we need to listen to the upcomming message or event to socket.io and then sink it to redis
+So as a user we can emmit some events , so we can emmit a message like hello so if user 1 send this hello and user 2 ,user 3 is suscribed to that message then they will get the message if there are 1 lakh user and if there are socket 1 which contain 50k users and socket 2 contain 50k so now so as we know we need to connect socket 1 and socket 2 together so to connect them we need a pub sub which will help in connection between two sockets and if user 1 and user 2 are in different socket but connected or suscribed with same message and then user 1 send a message the message then it will reach socket 1 server and then it will go to pub sub and then to socket 2 and then whoever is connected to it will get the message 
+
+4. So now we made a folder as context where we will put all the react context in it, all the context files inside this will be using 'use client' as they are client function and it should only run on the client
+
+So to send the message from frontend to the server we need a library called :-yar add socket.io-client , added it in the web frontend folder 
+in server we use socket.io and in frontend client we use socket.io-client
+
+So now as we have made a SocketProvider context and we will use that context in layout means we will wrap SocketProvider on the whole html so that everyone can get the context of it, so now all our application has access to that SocketProvider context
+
+
+5. Till here we have emitted the message from frontend to backend socket server but now we need to send the message back to the user who is suscribed to it but we will not do it simply , if there are many user and we need to upscale so we need to use some thing like redis pubsub 
+So whoever a user send a message it will go to our socket server then that socket server will send that message to redis pub sub
+So first create an account in this https://console.aiven.io/signup?referral_code=w8aysvijve44qic9nyvv
+And then we will go to its redis services 
+then we need to go to server setting in that redis server and then scroll down click on config and then disable ssl and now in the overview we see we will have two options ssl and plaintext select plaintext, so we have host,port,username and password using this we can connect our redis server in the redisinsight, and then copy the thing from our redis server to redisinsight to make redis server just serch redis using crtl+f u will find redis
+
+
+but i have used https://console.upstash.com/redis/d124d609-22a8-4504-ac07-34f0131000d9?teamid=0
+
+ioredis:- install this ioredis package , inside server folder
+
+also download this https://redis.io/insight/ redisinsight it will tell us whats going on inside our redis
+to check if it is working we need to go to pub/sub in redis then there we will see a suscribed button we need to suscribed it and then it we wirte any message in the frontend we will see that message there
